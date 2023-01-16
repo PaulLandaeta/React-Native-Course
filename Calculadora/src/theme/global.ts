@@ -34,4 +34,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  previous : {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: 'gray',
+    paddingRight: 20,
+    textAlign: 'right',
+  }
 });
