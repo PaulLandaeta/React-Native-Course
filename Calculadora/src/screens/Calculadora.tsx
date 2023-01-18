@@ -1,58 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Text, View} from 'react-native';
 import {styles} from '../theme/global';
 import {ButtonC} from '../components/ButtonC';
+import {useOperations} from '../hooks/useOperations';
 export const Calculadora = () => {
-  const [number, setNumber] = useState('0');
-  const [previous, setPrevious] = useState('0');
-  const [currentOperator, setCurrentOperator] = useState('');
-  const pressNumber = (digit: string) => {
-    if (digit === '.' && number.includes('.')) {
-      return;
-    } else if (number.startsWith('0') && number.includes('.')) {
-      setNumber(number + digit);
-    } else if (number.startsWith('0') && !number.includes('.')) {
-      if (digit === '.') {
-        setNumber(number + digit);
-      } else {
-        setNumber(digit);
-      }
-    } else {
-      setNumber(number + digit);
-    }
-  };
+  const {
+    number,
+    previous,
+    pressNumber,
+    pressSign,
+    result,
+    pressOperation,
+    pressClean,
+  } = useOperations();
 
-  const pressClean = (operator: string) => {
-    console.log(operator);
-    setNumber('0');
-  };
-
-  const pressOperation = (operator: string) => {
-    setCurrentOperator(operator);
-    setPrevious(number);
-    setNumber('0');
-  };
-
-  const result = (operator: string) => {
-    console.log(currentOperator);
-    if (currentOperator === '') {
-      setPrevious(number);
-      setNumber('0');
-    } else {
-      if (currentOperator === '+') {
-        setNumber((Number(previous) + Number(number)).toString());
-        setPrevious('0');
-      }
-    }
-  };
-
-  const pressSign = (operator: string) => {
-    if (number.startsWith('-')) {
-      setNumber(number.replace('-', ''));
-    } else {
-      setNumber('-' + number);
-    }
-  };
   return (
     <View style={styles.container}>
       {previous !== '0' && (
