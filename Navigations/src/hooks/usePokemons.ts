@@ -1,17 +1,17 @@
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 import {pokeInstance} from '../services/pokeInstance';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {Pokemon} from '../interfaces/pokemonInterface';
 export const usePokemons = () => {
-  let pokemonsURL = `${BASE_URL}?limit=20`;
+  // let pokemonsURL = `${BASE_URL}?limit=20`;
+  const pokemonsURL = useRef(`${BASE_URL}?limit=20`);
   const [pokemonList, setPokemonList]  = useState<Pokemon[]>([]);
   const loadPokemons = async () => {
-    const responsePokemons = await pokeInstance.get(pokemonsURL);
+    const responsePokemons = await pokeInstance.get(pokemonsURL.current);
     const {data} = responsePokemons;
     const {results} = data;
-    pokemonsURL = data.next;
+    pokemonsURL.current = data.next;
     makePokemon(results);
-    console.log(results);
   };
 
   const makePokemon = (data: any) => {
@@ -28,7 +28,7 @@ export const usePokemons = () => {
       return newPokemon;
     });
     //
-    setPokemonList(newPokemonList);
+    setPokemonList([...pokemonList, ...newPokemonList]);
   };
 
   useEffect(() => {

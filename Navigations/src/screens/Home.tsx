@@ -22,7 +22,9 @@ export const ScreenHome = (props: any) => {
           keyExtractor={pokemon => pokemon.id}
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          renderItem={({item}) => <PokemonCard title={item.name} />}
+          renderItem={({item}) => <PokemonCard pokemon={item} />}
+          onEndReached={loadPokemons}
+          onEndReachedThreshold={0.5}
         />
       </View>
     </>

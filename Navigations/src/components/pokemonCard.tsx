@@ -2,16 +2,20 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
 export const PokemonCard = (props: any) => {
-  const {title} = props;
+  const {pokemon} = props;
+  const {name: title, picture} = pokemon;
   return (
     <TouchableOpacity>
       <View style={{...styles.container}}>
-        <Text>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
         <View style={styles.pokebolaContainer}>
           <Image
             source={require('../assets/Pokebola.png')}
             style={styles.pokebola}
           />
+        </View>
+        <View style={styles.pokemonContainer}>
+          <Image source={{uri: picture}} style={styles.pokemonImage} />
         </View>
       </View>
     </TouchableOpacity>
@@ -20,7 +24,7 @@ export const PokemonCard = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
+    backgroundColor: '#FDB5A5',
     marginHorizontal: 10,
     width: 200,
     height: 100,
@@ -43,5 +47,23 @@ const styles = StyleSheet.create({
     right: 0,
     overflow: 'hidden',
     opacity: 0.8,
+  },
+  title: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    top: 20,
+    left: 10,
+  },
+  pokemonContainer: {
+    bottom: 0,
+    right: 0,
+    position: 'absolute',
+  },
+  pokemonImage: {
+    width: 100,
+    height: 100,
+    right: -15,
+    bottom: -10,
   },
 });
