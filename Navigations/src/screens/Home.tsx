@@ -17,8 +17,8 @@ export const ScreenHome = (props: any) => {
     },
   ];
 
-  const Item = ({title}: ItemProps) => (
-    <View style={{width: 200, height: 200, backgroundColor: 'red'}}>
+  const Item = ({title}: any) => (
+    <View style={{width: 200, height: 200}}>
       <Text>{title}</Text>
     </View>
   );
@@ -34,11 +34,7 @@ export const ScreenHome = (props: any) => {
           keyExtractor={pokemon => pokemon.id}
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          renderItem={({item}) => 
-            <Item title={item.name} />}
-          style={{
-            flex: 1,
-          }}
+          renderItem={({item}) => <Item title={item.name} />}
         />
       </View>
     </>
