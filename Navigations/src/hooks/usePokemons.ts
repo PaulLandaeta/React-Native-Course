@@ -1,16 +1,16 @@
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 import {pokeInstance} from '../services/pokeInstance';
-import {useEffect} from 'react';
-
+import {useEffect, useState} from 'react';
+import {Pokemon} from '../interfaces/pokemonInterface';
 export const usePokemons = () => {
   let pokemonsURL = `${BASE_URL}?limit=20`;
-
+  const [pokemonList, setPokemonList]  = useState<Pokemon[]>([]);
   const loadPokemons = async () => {
     const responsePokemons = await pokeInstance.get(pokemonsURL);
     const {data} = responsePokemons;
-    const { results } = data;
+    const {results} = data;
     pokemonsURL = data.next;
-   makePokemon(results);
+    makePokemon(results);
     console.log(results);
   };
 
@@ -23,10 +23,12 @@ export const usePokemons = () => {
       const newPokemon = {
         name,
         id,
-        picture: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${ id }.png`,
+        picture: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
       };
       return newPokemon;
     });
+    //
+    setPokemonList(newPokemonList);
   };
 
   useEffect(() => {
@@ -34,5 +36,6 @@ export const usePokemons = () => {
   }, []);
   return {
     loadPokemons,
+    pokemonList,
   };
 };

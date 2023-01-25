@@ -5,17 +5,8 @@ import {usePokemons} from '../hooks/usePokemons';
 export const ScreenHome = (props: any) => {
   console.log(props);
   const {navigation} = props;
-  const {loadPokemons} = usePokemons();
-  const listPokemon = [
-    {
-      id: '1',
-      name: 'Pikachu',
-    },
-    {
-      id: '2',
-      name: 'charizard',
-    },
-  ];
+  const {loadPokemons, pokemonList} = usePokemons();
+  console.log('=======', pokemonList);
 
   const Item = ({title}: any) => (
     <View style={{width: 200, height: 200}}>
@@ -30,7 +21,7 @@ export const ScreenHome = (props: any) => {
       />
       <View style={{alignItems: 'center'}}>
         <FlatList
-          data={listPokemon}
+          data={pokemonList}
           keyExtractor={pokemon => pokemon.id}
           showsVerticalScrollIndicator={false}
           numColumns={2}
