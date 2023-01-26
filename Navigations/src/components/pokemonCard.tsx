@@ -1,12 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import ImageColors from 'react-native-image-colors';
 
 export const PokemonCard = (props: any) => {
   const {pokemon} = props;
   const {name: title, picture} = pokemon;
+  const [bgColor, setBgColor] = useState('#FDB5A5');
+  // Color Dominante
+
+  useEffect(() => {
+    ImageColors.getColors(picture, {fallback: '#FDB5A5'})
+      .then(colors => {
+        console.log(colors);
+        const {platform} = colors;
+        if (platform === 'android') {
+          setBgColor(colors?.dominant || '#FDB5A5');
+        }
+      })
+      .catch(err => {
+        // set el color por defect
+        console.error(err);
+      });
+  }, []);
+
   return (
     <TouchableOpacity>
-      <View style={{...styles.container}}>
+      <View style={{...styles.container, backgroundColor: bgColor}}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.pokebolaContainer}>
           <Image
@@ -24,7 +43,6 @@ export const PokemonCard = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FDB5A5',
     marginHorizontal: 10,
     width: 200,
     height: 100,
