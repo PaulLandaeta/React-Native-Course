@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import ImageColors from 'react-native-image-colors';
+import {useNavigation} from '@react-navigation/native';
 
 export const PokemonCard = (props: any) => {
   const {pokemon} = props;
   const {name: title, picture} = pokemon;
   const [bgColor, setBgColor] = useState('#FDB5A5');
-  // Color Dominante
+  const navigation = useNavigation();
 
   useEffect(() => {
     ImageColors.getColors(picture, {fallback: '#FDB5A5'})
@@ -24,7 +25,9 @@ export const PokemonCard = (props: any) => {
   }, []);
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('ScrenPokemon', {
+      pokemon
+    })}>
       <View style={{...styles.container, backgroundColor: bgColor}}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.pokebolaContainer}>
