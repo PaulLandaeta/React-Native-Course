@@ -11,7 +11,7 @@ export const StackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="ScreenHome" component={ScreenHome} />
-      <Stack.Screen name="ScrenPokemon" component={PokemonScreen} />
+      <Stack.Screen name="ScreenPokemon" component={PokemonScreen} />
     </Stack.Navigator>
   );
 };

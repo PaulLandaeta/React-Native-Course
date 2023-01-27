@@ -25,9 +25,13 @@ export const PokemonCard = (props: any) => {
   }, []);
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ScrenPokemon', {
-      pokemon
-    })}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('ScreenPokemon', {
+          ...pokemon,
+          color: bgColor
+        })
+      }>
       <View style={{...styles.container, backgroundColor: bgColor}}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.pokebolaContainer}>
