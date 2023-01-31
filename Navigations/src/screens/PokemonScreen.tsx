@@ -21,6 +21,8 @@ export const PokemonScreen = props => {
   const {pokemon} = usePokemon(id);
   console.log(`Pokemon info ${id}`, pokemon);
   const {weight, base_experience, sprites = {}} = pokemon;
+  const tab1 = TabContext.getPosition();
+  TabContext.setPosition(tab1);
 
   console.log(`Pokemon info ${id}`, pokemon);
   return (

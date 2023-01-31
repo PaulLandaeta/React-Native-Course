@@ -4,22 +4,29 @@ import {ScreenTwo} from '../screens/ScreenTwo';
 import {ScreenOne} from '../screens/ScreenOne';
 import {ScreenHome} from '../screens/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {screen} from './constants';
+import {ProductStack} from './ProductStack';
 
 const Tab = createBottomTabNavigator();
 
 export const TabsNavigation = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: 'Casita',
-          tabBarIcon: () => <Icon name="home-outline" color="red" size={20} />,
-        }}
-        component={ScreenHome}
-      />
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        headerShown: false,
+        tabBarIcon: () => getIconByTab(route),
+      })}>
+      <Tab.Screen name={screen.homeStack.tab} component={ProductStack} />
       <Tab.Screen name="ScreenOne" component={ScreenOne} />
       <Tab.Screen name="ScreenTwo" component={ScreenTwo} />
     </Tab.Navigator>
   );
+};
+
+const getIconByTab = (route: any) => {
+  console.log(route);
+  if (route.name === screen.homeStack.tab) {
+    return <Icon name={screen.homeStack.icon} color="red" size={20} />;
+  }
+  return <Icon name={screen.homeStack.icon} color="green" size={20} />;
 };
