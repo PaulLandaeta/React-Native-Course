@@ -3,7 +3,6 @@ const homeStack = {
   home: 'Home',
   title: 'Home',
   icon: 'home-outline',
-  
 };
 
 const favoritesStack = {
@@ -13,9 +12,17 @@ const favoritesStack = {
   FavoritesStack: 'FavoritesStack',
 };
 
+const accountStack = {
+  tab: 'AccountsTab',
+  title: 'Cuenta',
+  icon: 'person-outline',
+  AccountStack: 'AccountStack',
+};
+
 export const screen = {
   homeStack,
   favoritesStack,
+  accountStack,
 };
 
 // Home
