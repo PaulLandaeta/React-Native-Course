@@ -16,7 +16,7 @@ export const WelcomeScreen = props => {
       setHasLogged(user ? true : false);
     });
   }, []);
-  return hasLogged ? (
+  return !hasLogged ? (
     <View>
       <Text>Screen Welcome Logged</Text>
     </View>

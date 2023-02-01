@@ -3,6 +3,12 @@ import {View} from 'react-native';
 import {Input, Button} from '@rneui/themed';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from './../../services/firebase';
+import {useFormik} from 'formik';
+import * as YUP from 'yup';
+const initialValues = {
+  email: '',
+  password: '',
+};
 
 export const LoginScreen = () => {
   const login = () => {
@@ -17,15 +23,46 @@ export const LoginScreen = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(errorMessage);
+        console.error(errorCode);
       });
   };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: YUP.object({
+      email: YUP.string()
+        .required('El email es Requerido.')
+        .email('No es un email valido'),
+      password: YUP.string().required('El password es Requerido.'),
+    }),
+    // validationOnChange: false,
+    onSubmit: formValue => {
+      try {
+        setTimeout(() => {
+          console.log(JSON.stringify(formValue, null, 2));
+        }, 400);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   return (
     <>
       <View style={{flex: 1, backgroundColor: 'red'}}>
         <View style={{flex: 1, backgroundColor: 'black'}}></View>
         <View style={{flex: 1, backgroundColor: 'white'}}>
-          <Input placeholder="Email" />
-          <Input placeholder="Password" secureTextEntry={true} />
+          <Input
+            placeholder="Email"
+            onChangeText={text => formik.setFieldValue('email', text)}
+            errorMessage={formik.errors.email}
+          />
+          <Input
+            placeholder="Password"
+            errorMessage={formik.errors.password}
+            onChangeText={text => formik.setFieldValue('password', text)}
+            secureTextEntry={true}
+          />
           <Button
             title="LOG IN"
             buttonStyle={{
@@ -40,7 +77,7 @@ export const LoginScreen = () => {
               marginVertical: 10,
             }}
             titleStyle={{fontWeight: 'bold'}}
-            onPress={login}
+            onPress={formik.handleSubmit}
           />
         </View>
       </View>
