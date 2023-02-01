@@ -3,6 +3,7 @@ const homeStack = {
   home: 'Home',
   title: 'Home',
   icon: 'home-outline',
+  
 };
 
 const favoritesStack = {

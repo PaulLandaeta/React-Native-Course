@@ -1,17 +1,71 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, ScrollView, StyleSheet, Image} from 'react-native';
+import {Text, Card, FAB} from '@rneui/themed';
 
 export const ProductsScreen = (props: any) => {
   const {navigation} = props;
+  const product = {
+    name: 'Zapato',
+  };
   const goToNewProduct = () => {
-    // navigation.navigate(screen)
+    navigation.navigate('NewProduct');
   };
 
   const goToProduct = () => {};
 
   return (
-    <View>
-      <Text>Screen Products</Text>
-    </View>
+    <>
+      <ScrollView>
+        <View style={styles.container}>
+          <Card>
+            <Card.Title>{product.name}</Card.Title>
+            <Card.Divider />
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, alignItems: 'center'}}>
+                <Image
+                  source={{
+                    uri: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+                  }}
+                  style={{width: 100, height: 100}}
+                />
+              </View>
+              <View style={{flex: 2}}>
+                <Text style={{fontWeight: 'bold'}}>Zapato</Text>
+                <Text>Vendedor</Text>
+              </View>
+            </View>
+          </Card>
+        </View>
+      </ScrollView>
+      <FAB      
+        icon={{name: 'add', color: 'white'}}
+        size="large"
+        placement="right"
+        onPress={goToNewProduct}
+        color="green"
+      />
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  fonts: {
+    marginBottom: 8,
+  },
+  user: {
+    flexDirection: 'row',
+    marginBottom: 6,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 16,
+    marginTop: 5,
+  },
+});
