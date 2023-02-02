@@ -2,29 +2,44 @@ import React from 'react';
 import {View} from 'react-native';
 import {Input, Button} from '@rneui/themed';
 import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth} from './../../services/firebase';
+import {auth, db} from './../../services/firebase';
 import {useFormik} from 'formik';
 import * as YUP from 'yup';
+import {collection, addDoc} from 'firebase/firestore';
 const initialValues = {
   email: '',
   password: '',
 };
 
 export const LoginScreen = () => {
-  const login = () => {
-    signInWithEmailAndPassword(auth, 'paulwilkerlf@gmail.com', '123456')
-      .then(userCredential => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        // ...
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorMessage);
-        console.error(errorCode);
+  const login = async () => {
+    // signInWithEmailAndPassword(auth, 'paulwilkerlf@gmail.com', '123456')
+    //   .then(userCredential => {
+    //     // Signed in
+    //     const user = userCredential.user;
+    //     console.log(user);
+    //     // ...
+    //   })
+    //   .catch(error => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.error(errorMessage);
+    //     console.error(errorCode);
+    //   });
+
+    // Llenar a firestore un product
+    console.log('enter login');
+    try {
+      console.log('aait');
+      const docRef = await addDoc(collection(db, 'products'), {
+        nombre: 'Ada',
+        vendedor: 'Lovelace',
+        price: 1815,
       });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.log('Error adding document: ', e);
+    }
   };
 
   const formik = useFormik({
@@ -38,9 +53,7 @@ export const LoginScreen = () => {
     // validationOnChange: false,
     onSubmit: formValue => {
       try {
-        setTimeout(() => {
-          console.log(JSON.stringify(formValue, null, 2));
-        }, 400);
+        login();
       } catch (error) {
         console.log(error);
       }

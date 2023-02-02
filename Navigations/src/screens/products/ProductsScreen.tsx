@@ -1,13 +1,19 @@
 import React from 'react';
 import {View, ScrollView, StyleSheet, Image} from 'react-native';
 import {Text, Card, FAB} from '@rneui/themed';
-
+import {useSelector, useDispatch} from 'react-redux';
+import {isLogin} from '../../store/actions/userAuthAction';
 export const ProductsScreen = (props: any) => {
+  const dispatch = useDispatch();
   const {navigation} = props;
   const product = {
     name: 'Zapato',
   };
+  const authUser = useSelector(store => store.userAuth);
+  const {isLogin: login} = authUser;
+  console.log(isLogin);
   const goToNewProduct = () => {
+    dispatch(isLogin());
     navigation.navigate('NewProduct');
   };
 
@@ -31,13 +37,13 @@ export const ProductsScreen = (props: any) => {
               </View>
               <View style={{flex: 2}}>
                 <Text style={{fontWeight: 'bold'}}>Zapato</Text>
-                <Text>Vendedor</Text>
+                <Text> {'Vendedor' + login}</Text>
               </View>
             </View>
           </Card>
         </View>
       </ScrollView>
-      <FAB      
+      <FAB
         icon={{name: 'add', color: 'white'}}
         size="large"
         placement="right"
