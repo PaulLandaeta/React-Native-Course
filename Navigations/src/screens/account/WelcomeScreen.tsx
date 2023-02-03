@@ -1,13 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Text} from 'react-native';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './../../services/firebase';
 import {Button, ButtonGroup, withTheme} from '@rneui/themed';
+import {AuthContext} from '../../contexts/authContext';
 
 export const WelcomeScreen = props => {
   const {navigation} = props;
   const [hasLogged, setHasLogged] = useState(false);
+
+  const {login: loginContext, isLogin: isLoginContext} =
+    useContext(AuthContext);
+  console.log('login antes del tap ', isLoginContext);
   const goToLogin = () => {
+    loginContext();
     navigation.navigate('LoginScreen');
   };
   useEffect(() => {

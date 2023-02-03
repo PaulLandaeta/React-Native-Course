@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 import {Input, Button} from '@rneui/themed';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -6,13 +6,18 @@ import {db} from './../../services/firebase';
 import {useFormik} from 'formik';
 import * as YUP from 'yup';
 import {v4 as uuidv4} from 'uuid';
-import {collection, doc, setDoc} from 'firebase/firestore/lite';
+import {doc, setDoc} from 'firebase/firestore/lite';
+import {AuthContext} from '../../contexts/authContext';
 const initialValues = {
   email: '',
   password: '',
 };
 
 export const LoginScreen = () => {
+  // TODO: consumir del contexto
+
+  const {isLogin: isLoginContext} = useContext(AuthContext);
+  console.log(isLoginContext);
   const login = async () => {
     // signInWithEmailAndPassword(auth, 'paulwilkerlf@gmail.com', '123456')
     //   .then(userCredential => {
@@ -27,7 +32,7 @@ export const LoginScreen = () => {
     //     console.error(errorMessage);
     //     console.error(errorCode);
     //   });
-
+    // Llmar al context y modificar a true isLogin field
     // Llenar a firestore un product
     console.log('enter login');
     try {
