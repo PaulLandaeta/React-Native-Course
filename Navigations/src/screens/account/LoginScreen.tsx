@@ -2,10 +2,11 @@ import React from 'react';
 import {View} from 'react-native';
 import {Input, Button} from '@rneui/themed';
 import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth, db} from './../../services/firebase';
+import {db} from './../../services/firebase';
 import {useFormik} from 'formik';
 import * as YUP from 'yup';
-import {collection, addDoc} from 'firebase/firestore';
+import {v4 as uuidv4} from 'uuid';
+import {collection, doc, setDoc} from 'firebase/firestore/lite';
 const initialValues = {
   email: '',
   password: '',
@@ -30,13 +31,16 @@ export const LoginScreen = () => {
     // Llenar a firestore un product
     console.log('enter login');
     try {
-      console.log('aait');
-      const docRef = await addDoc(collection(db, 'products'), {
-        nombre: 'Ada',
-        vendedor: 'Lovelace',
-        price: 1815,
+      console.log('aait', db);
+      const id = uuidv4();
+      await setDoc(doc(db, '/products', id), {
+        nombre: 'Pantalon',
+        vendedor: 'Landaeta',
+        price: 250,
+        id,
       });
-      console.log('Document written with ID: ', docRef.id);
+
+      console.log('Document written with ID: ');
     } catch (e) {
       console.log('Error adding document: ', e);
     }
@@ -51,9 +55,10 @@ export const LoginScreen = () => {
       password: YUP.string().required('El password es Requerido.'),
     }),
     // validationOnChange: false,
-    onSubmit: formValue => {
+    onSubmit: async formValue => {
       try {
-        login();
+        await login();
+        console.log('123123');
       } catch (error) {
         console.log(error);
       }
