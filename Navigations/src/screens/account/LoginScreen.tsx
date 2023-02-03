@@ -33,6 +33,7 @@ export const LoginScreen = () => {
     try {
       console.log('aait', db);
       const id = uuidv4();
+      console.log(id);
       await setDoc(doc(db, '/products', id), {
         nombre: 'Pantalon',
         vendedor: 'Landaeta',
